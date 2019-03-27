@@ -5,11 +5,22 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.AnimationDrawable;
 import android.graphics.drawable.TransitionDrawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.BaseAdapter;
+import android.widget.Button;
+import android.widget.ListAdapter;
+import android.widget.ListView;
 import android.widget.RemoteViews;
 import android.widget.TextView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -39,8 +50,60 @@ public class MainActivity extends AppCompatActivity {
         TextView textView = (TextView)findViewById(R.id.transition_textview);
         TransitionDrawable drawable  = (TransitionDrawable)textView.getBackground();
         drawable.startTransition(5000);
+
+        Button button = (Button)findViewById(R.id.frame_button);
+        button.setBackgroundResource(R.drawable.frame_animation);
+        AnimationDrawable aniationDrawable= (AnimationDrawable)button.getBackground();
+        aniationDrawable.start();
+
+        ListView listView = (ListView)findViewById(R.id.layout_anim_list);
+        ArrayList<String> listItems = new ArrayList<String>();
+        for(int i = 0;i<99;i++){
+            listItems.add("Item " + i);
+        }
+        MyListAdapter adapter = new MyListAdapter(listItems);
+        listView.setAdapter(adapter);
+
     }
 
+    class MyListAdapter extends BaseAdapter{
+         List<String> data;
+         MyListAdapter(ArrayList<String> data){
+            this.data = data;
+        }
+        @Override
+        public int getCount() {
+            return data ==null ? 0 : data.size();
+        }
 
+        @Override
+        public String getItem(int position) {
+            return data == null ? null : data.get(position);
+        }
+
+        @Override
+        public long getItemId(int position) {
+            return position;
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            Holder holder = null;
+             if(convertView == null){
+                 convertView =  LayoutInflater.from(getApplicationContext()).inflate(R.layout.item_list,parent,false);
+                 holder = new Holder();
+                 holder.textView = (TextView)convertView.findViewById(R.id.item_name);
+                 convertView.setTag(holder);
+             }else {
+                 holder = (Holder)convertView.getTag();
+             }
+            holder.textView.setText(getItem(position));
+            return convertView;
+        }
+
+        class Holder {
+             TextView textView;
+        }
+    }
 
 }

@@ -5,7 +5,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity">
-   <LinearLayout
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/layout_anim_list"
+        android:layoutAnimation="@anim/layout_anim"
+        />
+   <LinearLayout android:visibility="gone"
        android:layout_width="match_parent"
        android:layout_height="match_parent"
        android:orientation="vertical"
@@ -40,5 +46,10 @@
            android:layout_height="wrap_content"
            android:background="@drawable/scale_drawable"
            />
+       <Button
+           android:id="@+id/frame_button"
+           android:text="clickFrame"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content" />
    </LinearLayout>
 </android.support.constraint.ConstraintLayout>
