@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
         builder.setSmallIcon(R.drawable.ic_launcher_background);
         builder.setWhen(System.currentTimeMillis());
         builder.setAutoCancel(true);
-        Intent intent = new Intent(this,TestActivity1.class);
+        final Intent intent = new Intent(this,TestActivity1.class);
         PendingIntent pendingIntent = PendingIntent.getActivity(this,0,intent,PendingIntent.FLAG_UPDATE_CURRENT);
         builder.setContentTitle("Contenttitle");
         builder.setContentText("contentText");
@@ -64,6 +64,22 @@ public class MainActivity extends AppCompatActivity {
         MyListAdapter adapter = new MyListAdapter(listItems);
         listView.setAdapter(adapter);
 
+        final Button startActivity = (Button) findViewById(R.id.start_activity);
+        startActivity.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent1 = new Intent(MainActivity.this,TestActivity1.class);
+                startActivity(intent);
+              //  overridePendingTransition(R.anim.enter_activity,0);
+               // finish();
+            }
+        });
+    }
+
+   @Override
+    public void finish() {
+        super.finish();
+      //  overridePendingTransition(0,R.anim.exit_activity);
     }
 
     class MyListAdapter extends BaseAdapter{
